@@ -1,6 +1,6 @@
-{name" : "mtfe-testproxy",
+{"name"mtfe-testproxy",
 	"main" : "./index.js",
-	"bin"  : { "mtfe-testproxy": "./index.js" },
+	"bin"  : { "mtfe_testproxy": "./index.js" },
 	"description" : "for ajax test proxy",
 	"author" : {
 		"name" : "wenhuajian",
