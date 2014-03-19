@@ -1,0 +1,16 @@
+{name" : "mtfe-testproxy",
+	"main" : "./index.js",
+	"bin"  : { "mtfe-testproxy": "./index.js" },
+	"description" : "for ajax test proxy",
+	"author" : {
+		"name" : "wenhuajian",
+		"email" : "wenhuajian@meituan"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/patbiti/crossDomainProxy.git"
+	},
+	"version" : "0.0.1",
+	"dependencies" : {
+	}
+}
