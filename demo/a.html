@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+	<head>
+		<title>page a</title>
+	</head>
+	<body>
+		<h1> page A</h1>
+		<input type="text" id="sendValue" value="" placeholder="send value here"/>
+		<input type="button" onclick="changePage()" value="change page by window.Name once"/>
+		<input type="button" onclick="changeByPostMessage()" value="change page by post message"/>
+		<h2>call back zone</h2>
+		<div id="cbzone">
+			
+		</div>
+		<hr/>
+		<iframe id="bIframe" src="http://localhost:8889/crossDomain/b.html" width=500 height=500></iframe>
+	</body>
+	<script>
+		var changePage = function(){
+			var msg = 'change page b by iframe hash:';
+			msg = msg + document.getElementById('sendValue').value;
+			sendMessage(msg);
+
+		}
+		var proxyWin = null;
+		var getMessage = function(data){
+			console.log('messageFromProxyWin:'+ data);
+			document.getElementById('cbzone').innerHTML = data;
+			//	sendMessage('top has receive data:'+ data);
+		}
+		var sendMessage = function(data){
+			if(null!= proxyWin){
+				proxyWin.getMessage(data);
+			}
+		}
+
+
+		var changeByPostMessage = function(){
+			var msg = 'change page b by postMessage';
+			msg = msg + document.getElementById('sendValue').value;
+			console.log('send message to b:'+msg);
+			document.getElementById('bIframe').contentWindow.postMessage(msg, '*');
+		}
+		
+		window.addEventListener('message', function(e){
+			if(e.origin !='http://localhost:8889'){
+				return;
+			}
+			document.getElementById('cbzone').innerHTML = e.data;
+		}, false);
+	
+	</script>
+</html>

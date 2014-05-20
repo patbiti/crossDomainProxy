@@ -1,0 +1,30 @@
+<html>
+	<body>
+	</body>
+	<script>
+		var topWin = top;
+		var url = window.location.href;
+		topWin.proxyWin = window;
+		var getMessage = function(data){
+			console.log('a.proxy:get message from top.data:'+ data);
+			window.name = data;
+			window.location.href='http://localhost:8889/crossDomain/bproxy.html';
+		}
+		
+		var sendMessage = function(data){
+			console.log('a.proxy:send message for top.data:'+ data);
+			topWin.proxyWin = window;
+			topWin.getMessage(data);
+		}
+		var hash = window.location.hash;
+		//方案一重新页面加载，每次刷新都加载一次。
+		//方案二 轮巡回
+		var listener = setInterval(function(){
+			var newHash = window.location.hash;
+			if(newHash !== hash){
+				hash = newHash;
+				sendMessage(decodeURIComponent(hash));
+			}
+		},1000);
+	</script>
+</html>

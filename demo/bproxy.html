@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+	<body>
+	</body>
+	<script>
+		var parentWin = parent;
+		var data = null
+		var getMessage = function(){
+			if(window.name){
+
+				console.log('proxy get from a proxy.html' + data);
+				data = window.name;
+				parentWin.getMessage(data);
+
+			}	
+		}
+		getMessage();
+	</script>
+</html>

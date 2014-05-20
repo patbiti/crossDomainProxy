@@ -1,0 +1,44 @@
+<html>
+	<title>page b
+	</title>
+	<body>
+		<h1>page b</h1>
+		<h2>origin content</h2>
+		<div id="content">
+			origin content here.
+		</div>
+		<div id="test">
+		
+		</div>
+		<input type="text" value="" placeholder="pageb text here" id="sendValue" />
+		<input type="button" value="send by iframe" onclick="postByIframe()"/>
+		<input type="button" value="send by postMessage" onclick="postByPostMessage()"/>
+		<iframe id="proxy" src="http://localhost:8888/crossDomain/proxy.html" style="display:none"></iframe>
+
+	</body>
+	<script>
+		var postByIframe = function(){
+			var msg = 'bta, iframe:';
+			msg = msg +  document.getElementById('sendValue').value;
+			msg = encodeURIComponent(msg);
+			var proxyIframe = document.getElementById('proxy');
+			proxyIframe.src = 'http://localhost:8888/crossDomain/proxy.html#' + msg;
+		}
+		var getMessage = function(data){
+			console.log('b get message from b.frame'+ data);
+			document.getElementById('test').innerHTML = data;
+		}
+		var postByPostMessage = function(){
+			var msg = 'post message for b';
+			msg = msg +  document.getElementById('sendValue').value;
+			window.top.postMessage(msg, 'http://localhost:8888/');
+
+		}
+		window.addEventListener('message',function(event){
+			if(event.origin !=='http://localhost:8888'){
+				return;
+			}
+			document.getElementById('test').innerHTML = event.data;
+		},false);
+	</script>
+</html>
